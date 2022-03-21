@@ -1,11 +1,18 @@
+from fastapi import HTTPException, status
 from sqlalchemy.orm.session import Session
 import admins.schemas as _schemas
 import admins.models as _models
 from lib.hash import Hash
 
 def create_admin(db: Session, request: _schemas.AdminCreate):
+    admin = db.query(_models.Admin).filter(_models.Admin.username == request.username).first()
+    if(admin is not None):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Username taken!")
+    
     new_admin = _models.Admin(
-        **request.dict(),
+        username = request.username,
+        email = request.email,
+        login = request.login,
         password = Hash.bcrypt(request.password)
     )
     db.add(new_admin)
@@ -27,7 +34,9 @@ def get_admins_by_username(adminname: str, db: Session):
 def update_admin(id: int, db: Session, request: _schemas.AdminCreate):
     admin = db.query(_models.Admin).filter(_models.Admin.id == id)
     admin.update(_models.Admin(
-        **request.dict(),
+        username = request.username,
+        email = request.email,
+        login = request.login,
         password = Hash.bcrypt(request.password)
     ))
     db.commit()
@@ -35,6 +44,8 @@ def update_admin(id: int, db: Session, request: _schemas.AdminCreate):
 
 def delete_admin(id: int, db: Session):
     admin = db.query(_models.Admin).filter(_models.Admin.id == id).first()
+    if(admin is None):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Admin not found")
     db.delete(admin)
     db.commit()
     return admin

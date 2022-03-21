@@ -11,3 +11,5 @@ class AdminCreate(_AdminBase):
 
 class AdminResponse(_AdminBase):
     id: int
+    class Config:
+        orm_mode = True

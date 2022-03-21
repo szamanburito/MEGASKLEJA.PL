@@ -5,13 +5,12 @@ import admins
 from fastapi import FastAPI
 
 app = FastAPI(
-    prefix="/api"
 )
 
 app.include_router(admins.router)
 
-admins.model.Base.metadata.create_all(engine)
+admins.models.Base.metadata.create_all(engine)
 
-@app.get("/")
+@app.get("/api")
 async def get_home():
     return {"Hello": "World!"}
