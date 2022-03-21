@@ -1,6 +1,6 @@
 import datetime as _dt
 import sqlalchemy as _sql
-from database import Base
+from src.database import Base
 
 class Admin(Base):
     __tablename__="admins"

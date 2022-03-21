@@ -1,11 +1,11 @@
-from typing import TYPE_CHECKING, List
+from typing import List
 
 from fastapi import APIRouter, Depends, status
-from database import get_db
-import admins.db as admin_db
+from src.database import get_db
+import src.admins.db as admin_db
 
 from sqlalchemy.orm.session import Session
-import admins.schemas as _schemas
+import src.admins.schemas as _schemas
 
 router = APIRouter(
     prefix="",

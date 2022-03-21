@@ -1,6 +1,5 @@
-from sys import prefix
-from database import engine
-import admins
+from src.database import engine
+import src.admins as admins
 
 from fastapi import FastAPI
 

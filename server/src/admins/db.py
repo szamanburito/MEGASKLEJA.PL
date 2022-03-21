@@ -1,8 +1,8 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm.session import Session
-import admins.schemas as _schemas
-import admins.models as _models
-from lib.hash import Hash
+import src.admins.schemas as _schemas
+import src.admins.models as _models
+from src.lib.hash import Hash
 
 def create_admin(db: Session, request: _schemas.AdminCreate):
     admin = db.query(_models.Admin).filter(_models.Admin.username == request.username).first()
