@@ -11,6 +11,12 @@ const Home = () => {
                 setCount(count+1);
             }}> Here</Button>
             <div>{count}</div>
+            { count > 10 && (
+                <div>
+                    Gratulacje wygrales Iphone'a X
+                </div>
+            )
+            }
         </h1>
     )
 }
